@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Serialied JSON</title>
+<style type="text/css">
+	.container {
+	  display: flex;
+	  justify-content: space-between;
+	  width: 40%;
+	}
+	.button {
+	  background-color: #4CAF50; /* Green */
+	  border: none;
+	  color: white;
+	  padding: 15px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	}
+	setlist {display:block; font-size: 30px; font-style: oblique}
+	.song {display:block; 
+		margin-bottom: 15px; 
+		padding-bottom: 10px;
+		border-bottom: .7px solid #333;
+		font-family:"Gill Sans", Helvetica, Arial, "sans-serif";
+	}
+
+	.title {display: block; 
+		   font-style: normal;
+		   font-size: 20px
+	}
+
+	.artist {
+		display: block;
+		font-style: italic; 
+	font-size: 18px
+	}
+
+	.genre {font-size: 14px;
+			border-right: .7px solid #333;
+			padding-right: 5px}
+
+	.year { font-size: 14px;}	
+</style>
+</head>
+
+<body>
+	<script language="javascript" >
+	setlist = {
+			'song1':{
+			"name": "Hotel California",
+			"artist": "The Eagles",
+			"genre": "Rock",
+			"year": 1976,
+			},
+			'song2':{
+			"name": "God's Country",
+			"artist": "Blake Shelton",
+			"genre": "Country",
+			"year": 2019,
+			},
+
+			'song3':{
+			"name": "Old Town Road",
+			"artist": "Lil Nas X",
+			"genre": "Country",
+			"year": 2019,
+			},
+
+			'song4':{
+			"name": "On the Road Again",
+			"artist": "Willie Nelson",
+			"genre": "Country",
+			"year": 1980,
+			},
+
+			'song5':{
+			"name": "Back in Black",
+			"artist": "AC/DC",
+			"genre": "Rock",
+			"year": 1980,
+			},
+
+			'song6':{
+			"name": "Eruption",
+			"artist": "Van Halen",
+			"genre": "Rock",
+			"year": 1978,
+			},
+
+			'song7':{
+			"name": "White Iverson",
+			"artist": "Post Malone",
+			"genre": "Pop",
+			"year": 2015,
+			},
+
+			'song8':{
+			"name": "Yummy",
+			"artist": "Justin Bieber",
+			"genre": "Pop",
+			"year": 2020,
+			},
+
+			'song9':{
+			'name': "ET",
+			"artist": "Katy Perry",
+			"genre": "Pop",
+			"year": 2010,
+			},
+
+			'song10':{
+			"name": "She'll be Coming Round the Mountain",
+			"artist": "Buffy Sainte-Marie",
+			"genre": "Folk",
+			"year": 1973,
+		},
+}
+	function display_song(s, i){
+		  s += "<p class = song>";
+		  s += "<p class = title>" + setlist['song'+ i]["name"]; + "</p>";
+		  s += "<p class = artist>" + setlist['song'+ i]["artist"]; + "</p>"; 
+		  s += "<p class = year>" + setlist['song'+ i]["year"]; + "</p>";
+		  s += "<p class = genre>" + setlist['song'+ i]["genre"]; + "</p>";
+
+	      s+= "</p>";
+		return s;
+	}
+	function pt2(){
+		strSetlist  = JSON.stringify(setlist);
+		document.getElementById("print").innerHTML = strSetlist +  "<br>";
+		document.getElementById("menu").innerHTML = null;
+
+	}		
+	function pt3(){
+		s = "";
+		for(i = 1; i < 11; i++){
+		  s = display_song(s, i);
+		}  
+		document.getElementById("print").innerHTML = s;
+		document.getElementById("menu").innerHTML = null;
+
+	}
+	function update(){
+		var genre = document.getElementsByName("curr_genre")[0].value;
+		s = "";
+		for(i = 1; i < 11; i++){
+		  if(setlist['song'+ i]["genre"] == genre)
+			  s = display_song(s, i);
+		}
+		document.getElementById("print").innerHTML = s;
+
+	}
+	function pt4(){
+		document.getElementById("print").innerHTML = null;
+
+		let set = new Set();
+
+		for(i = 1; i < 11; i++){
+			if (!set.has(setlist['song'+ i]["genre"]))
+				set.add(setlist['song'+ i]["genre"]);
+		}
+		var t= "";
+		t = "<select name = 'curr_genre' size='1' onchange ='update()'>";
+		t+= "<option disabled selected value> -- select an option -- </option>";
+		for (let item of set)
+		   t += "<option>" + item + "</option>"; 
+		t+= + "</select>";
+		console.log(t);
+		document.getElementById("menu").innerHTML = t;
+
+	}
+
+</script>
+
+<div class="container">
+  <div><button type="button" class = "button" onclick = "pt2()">Part 2</button></div>
+  <div><button type="button" class = "button" onclick = "pt3()">Part 3</button></div>
+  <div><button type="button" class = "button" onclick = "pt4()">Part 4</button></div>
+</div>
+	<br/>
+	<span id = "menu">  </span>
+	<span id = "print"> </span>
+	
+</body>
+</html>
